@@ -80,6 +80,8 @@ public class AppTest {
             System.err.println("App failed: " + e);
         }
 
+        client.close();
+
         System.out.println("============ Test Ends ===========");
     }
     public static void main(String[] args) {

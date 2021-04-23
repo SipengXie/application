@@ -19,11 +19,6 @@ public class App {
     private String chaincodeName = null;
     private  Gateway gateway = null;
 
-    private Contract getContract() {
-        Network network = gateway.getNetwork(channelName);
-        return network.getContract(chaincodeName);
-    }
-
     public void setCCP(String ccp) {
         networkConfigPath  = Paths.get(ccp);
     }
@@ -46,6 +41,15 @@ public class App {
         Gateway.Builder builder = Gateway.createBuilder();
         builder.identity(wallet, userName).networkConfig(networkConfigPath).discovery(true);
         gateway =  builder.connect();
+    }
+
+    public void close() {
+        gateway.close();
+    }
+
+    private Contract getContract() {
+        Network network = gateway.getNetwork(channelName);
+        return network.getContract(chaincodeName);
     }
 
     public void initDataRecord(String[] args) throws Exception {
@@ -88,7 +92,7 @@ public class App {
         return new String(result);
     }
 
-    public  String queryDataRecordByUser(String[] args) throws Exception {
+    public String queryDataRecordByUser(String[] args) throws Exception {
 
         byte[] result;
         Contract contract = getContract();
@@ -98,7 +102,7 @@ public class App {
 
     }
 
-    public  String queryDataRecordById(String[] args) throws Exception {
+    public String queryDataRecordById(String[] args) throws Exception {
         byte[] result;
         Contract contract = getContract();
         System.out.println("Evaluate Transaction: query data records by id");
