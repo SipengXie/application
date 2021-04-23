@@ -6,7 +6,11 @@ import org.apache.thrift.TException;
 
 public class RpcQueryServiceImp implements RpcQueryService.Iface {
 
-    private App appClient = new App();
+    private App appClient;
+    public RpcQueryServiceImp() {
+        appClient = new App();
+    }
+
     @Override
     public void setCCP(String ccp) {
         appClient.setCCP(ccp);
