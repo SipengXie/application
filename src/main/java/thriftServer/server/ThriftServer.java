@@ -1,12 +1,12 @@
 package thriftServer.server;
 
-import application.fabricQueryService.RpcQueryService;
+import application.fabricService.RpcService;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.server.TNonblockingServer;
 import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TNonblockingServerTransport;
 import org.apache.thrift.transport.layered.TFramedTransport;
-import thriftServer.service.RpcQueryServiceImp;
+import thriftServer.service.RpcServiceImp;
 
 public class ThriftServer {
 
@@ -22,7 +22,7 @@ public class ThriftServer {
         TNonblockingServer.Args serverArgs = new TNonblockingServer.Args(serverTransport);
         serverArgs.protocolFactory(new TBinaryProtocol.Factory());
         serverArgs.transportFactory(new TFramedTransport.Factory());
-        RpcQueryService.Processor<RpcQueryServiceImp> processor = new RpcQueryService.Processor<>(new RpcQueryServiceImp());
+        RpcService.Processor<RpcServiceImp> processor = new RpcService.Processor<>(new RpcServiceImp());
         serverArgs.processor(processor);
         TNonblockingServer server = new TNonblockingServer(serverArgs);
 

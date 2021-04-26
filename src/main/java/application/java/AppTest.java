@@ -57,15 +57,15 @@ public class AppTest {
             result = client.queryUserRecordByAddr(new String[]{"user1.id1"});
             System.out.println(result);
 
-            client.initDataRecord(new String[]{uuid,"Department1","Jack","table1.id1","add",currentTime.toString(),"","","","",""});
+            client.initDataRecord(new String[]{uuid,"Department1","Jack","table1.id1","add",currentTime.toString()});
             result = client.queryDataRecordById(new String[]{uuid});
             System.out.println(result);
 
-            client.modifyDataRecord(new String[]{uuid,"review","Andy",currentTime.toString(),"true"});
+            client.modifyDataRecord(new String[]{uuid,"Andy",currentTime.toString(),"true","department2"});
             result = client.queryDataRecordByObject(new String[]{"table1.id1"});
             System.out.println(result);
 
-            client.modifyDataRecord(new String[]{uuid,"operate",currentTime.toString(),"[contentHash]"});
+            client.modifyDataRecord(new String[]{uuid,currentTime.toString(),"[contentHash]"});
             result = client.queryDataRecordByUser(new String[]{"Department1","Jack"});
             System.out.println(result);
 
