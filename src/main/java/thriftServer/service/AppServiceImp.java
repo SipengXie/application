@@ -1,12 +1,12 @@
 package thriftServer.service;
 
-import application.fabricService.RpcService;
+import application.fabricService.AppService;
 import application.java.App;
 import org.apache.thrift.TException;
 
-public class RpcServiceImp implements RpcService.Iface {
+public class AppServiceImp implements AppService.Iface {
     private final App appClient;
-    public RpcServiceImp() {
+    public AppServiceImp() {
         appClient = new App();
     }
 
@@ -119,4 +119,39 @@ public class RpcServiceImp implements RpcService.Iface {
         }
     }
 
+    @Override
+    public String queryDataRecordById(String uuid) throws TException {
+        try {
+            return appClient.queryDataRecordById(new String[]{uuid});
+        } catch (Exception e) {
+            throw new TException(e);
+        }
+    }
+
+    @Override
+    public String queryUserRecordByAddr(String address) throws TException {
+        try {
+            return appClient.queryUserRecordByAddr(new String[]{address});
+        } catch (Exception e) {
+            throw new TException(e);
+        }
+    }
+
+    @Override
+    public String queryUserRecordByDept(String department) throws TException {
+        try {
+            return appClient.queryUserRecordByDept(new String[]{department});
+        } catch (Exception e) {
+            throw new TException(e);
+        }
+    }
+
+    @Override
+    public String queryWithQueryString(String queryString) throws TException {
+        try {
+            return appClient.queryWithQueryString(new String[]{queryString});
+        } catch (Exception e) {
+            throw new TException(e);
+        }
+    }
 }

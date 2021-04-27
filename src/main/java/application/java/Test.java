@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 import java.time.LocalDateTime;
 
-public class AppTest {
+public class Test {
 
-    @Test
+    @org.junit.jupiter.api.Test
     public static void appTest () {
         /* Test environment and parameters */
         String caPemFilePath = "D:\\hyperledgerFabric\\fabric-samples\\test-network\\organizations\\peerOrganizations\\org1.example.com\\ca\\ca.org1.example.com-cert.pem";
@@ -15,9 +15,11 @@ public class AppTest {
         String mspId = "Org1MSP";
         String userName = "Jack";
         String department = "org1.department1";
+        /*
         String ccp = "D:\\hyperledgerFabric\\fabric-samples\\test-network\\organizations\\peerOrganizations\\org1.example.com\\connection-org1.yaml";
         String channelName = "mychannel";
         String chaincodeName = "record";
+         */
 
         System.out.println("============ Test Begins ===========");
         System.out.println("============ Test IdentityManagement Begins ===========");
@@ -39,6 +41,7 @@ public class AppTest {
             System.out.println("IdentityManagement failed:  " + e);
         }
         System.out.println("=========== Test IdentityManagement Ends ===========");
+        /*
         System.out.println("=========== Test App Begins ===========");
 
         App client = new App();
@@ -81,8 +84,9 @@ public class AppTest {
         }
 
         client.close();
-
+        */
         System.out.println("============ Test Ends ===========");
+
     }
     public static void main(String[] args) {
         appTest();
