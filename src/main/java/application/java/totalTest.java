@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 import java.time.LocalDateTime;
 
-public class Test {
+public class totalTest {
 
     @org.junit.jupiter.api.Test
     public static void appTest () {
