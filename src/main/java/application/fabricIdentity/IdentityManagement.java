@@ -1,4 +1,4 @@
-package application.java;
+package application.fabricIdentity;
 
 import java.util.Formatter;
 import java.nio.file.Paths;
