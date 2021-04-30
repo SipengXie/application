@@ -8,17 +8,18 @@ import java.io.FileWriter;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class thriftServerApplication {
 
-    static void createTokenFile(String name) throws Exception {
+    static void createTokenFile(String uuid) throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("UserId", name);
+        map.put("uuid", uuid);
         String token = javaRpcToken.createJavaRpcToken(map);
-        BufferedWriter out = new BufferedWriter(new FileWriter("token"));
+        BufferedWriter out = new BufferedWriter(new FileWriter("D:\\RpcToken"));
         out.write(token);
         out.close();
-        System.out.println("Successfully create token file at:" + Paths.get("token"));
+        System.out.println("Successfully create token file at: D:\\RpcToken");
     }
 
     public static void main(String[] args) {
@@ -27,9 +28,10 @@ public class thriftServerApplication {
         String channelName = "mychannel";
         String chaincodeName = "record";
         String name = "RpcServer";
+        UUID uuid = UUID.randomUUID();
         try {
-            createTokenFile(name);
-            thriftServer.start(ccp, name, channelName, chaincodeName);
+            createTokenFile(uuid.toString());
+            thriftServer.start(ccp, name, channelName, chaincodeName, uuid.toString());
         } catch (Exception e) {
             System.err.println("Cannot start thrift server: " + e);
         }

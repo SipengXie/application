@@ -5,15 +5,20 @@ import application.fabricRpcService.queryService;
 import application.javaRpcToken.javaRpcToken;
 import org.apache.thrift.TException;
 
+import java.util.Map;
+
 public class queryServiceImp implements queryService.Iface {
 
     private final queryApp proxy;
-    public queryServiceImp(String ccp, String name, String channelName, String chaincodeName) {
+    private final String uuid;
+    public queryServiceImp(String ccp, String name, String channelName, String chaincodeName, String uuid) {
         proxy = new queryApp(ccp, name, channelName, chaincodeName);
+        this.uuid = uuid;
     }
 
     boolean checkToken(String token) {
-        return javaRpcToken.parserJavaRpcToken(token) == null;
+        Map<String, Object> m = javaRpcToken.parserJavaRpcToken(token);
+        return (m == null) || !(m.get("uuid").equals(uuid));
     }
 
     @Override

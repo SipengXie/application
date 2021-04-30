@@ -18,14 +18,14 @@ public class ThriftServer {
         port = 25565;
     }
 
-    public void start(String ccp, String name, String channelName, String chaincodeName) throws Exception{
+    public void start(String ccp, String name, String channelName, String chaincodeName, String uuid) throws Exception{
         TNonblockingServerTransport serverTransport = new TNonblockingServerSocket(port);
         TNonblockingServer.Args serverArgs = new TNonblockingServer.Args(serverTransport);
         serverArgs.protocolFactory(new TBinaryProtocol.Factory());
         serverArgs.transportFactory(new TFramedTransport.Factory());
         TMultiplexedProcessor processor = new TMultiplexedProcessor();
         queryService.Processor<queryServiceImp> queryServiceImpProcessor = new queryService.Processor<>(new queryServiceImp(
-               ccp, name, channelName, chaincodeName));
+               ccp, name, channelName, chaincodeName, uuid));
        // ImService.Processor<ImServiceImp> imServiceImpProcessor = new ImService.Processor<>(new ImServiceImp());
         processor.registerProcessor("queryService",queryServiceImpProcessor);
        // processor.registerProcessor("ImService",imServiceImpProcessor);
