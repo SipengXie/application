@@ -1,6 +1,7 @@
 package thriftServer.server;
 
 import application.fabricRpcService.queryService;
+import application.fabricRpcService.updateService;
 import org.apache.thrift.TMultiplexedProcessor;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.server.TNonblockingServer;
@@ -8,11 +9,12 @@ import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TNonblockingServerTransport;
 import org.apache.thrift.transport.layered.TFramedTransport;
 import thriftServer.service.queryServiceImp;
+import thriftServer.service.updateServiceImp;
 
 public class ThriftServer {
 
-    private int port;
-   // public void setPort(int p) { port = p; }
+    private final int port;
+    // public void setPort(int p) { port = p; }
 
     public ThriftServer() {
         port = 25565;
@@ -25,10 +27,11 @@ public class ThriftServer {
         serverArgs.transportFactory(new TFramedTransport.Factory());
         TMultiplexedProcessor processor = new TMultiplexedProcessor();
         queryService.Processor<queryServiceImp> queryServiceImpProcessor = new queryService.Processor<>(new queryServiceImp(
-               ccp, name, channelName, chaincodeName, uuid));
-       // ImService.Processor<ImServiceImp> imServiceImpProcessor = new ImService.Processor<>(new ImServiceImp());
+                ccp, name, channelName, chaincodeName, uuid));
+        updateService.Processor<updateServiceImp> updateServiceImpProcessor = new updateService.Processor<>(new updateServiceImp(
+                ccp, name, channelName, chaincodeName, uuid));
         processor.registerProcessor("queryService",queryServiceImpProcessor);
-       // processor.registerProcessor("ImService",imServiceImpProcessor);
+        processor.registerProcessor("updateService",updateServiceImpProcessor);
         serverArgs.processor(processor);
         TNonblockingServer server = new TNonblockingServer(serverArgs);
 
