@@ -1,8 +1,8 @@
 package thriftServer.service;
 
 import application.fabricProxy.queryApp;
-import application.fabricRpcService.queryService;
-import application.javaRpcToken.javaRpcToken;
+import thriftServer.fabricRpcService.queryService;
+import thriftServer.javaRpcToken.javaRpcToken;
 import org.apache.thrift.TException;
 
 import java.util.Map;
@@ -11,7 +11,7 @@ public class queryServiceImp implements queryService.Iface {
 
     private final queryApp proxy;
     private final String uuid;
-    public queryServiceImp(String ccp, String name, String channelName, String chaincodeName, String uuid) {
+    public queryServiceImp(String ccp, String name, String channelName, String chaincodeName, String uuid) throws Exception{
         proxy = new queryApp(ccp, name, channelName, chaincodeName);
         this.uuid = uuid;
     }

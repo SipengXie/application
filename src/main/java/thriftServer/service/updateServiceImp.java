@@ -1,8 +1,8 @@
 package thriftServer.service;
 
 import application.fabricProxy.updateApp;
-import application.fabricRpcService.updateService;
-import application.javaRpcToken.javaRpcToken;
+import thriftServer.fabricRpcService.updateService;
+import thriftServer.javaRpcToken.javaRpcToken;
 import org.apache.thrift.TException;
 
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
 public class updateServiceImp implements updateService.Iface{
     private final updateApp proxy;
     private final String uuid;
-    public updateServiceImp(String ccp, String name, String channelName, String chaincodeName, String uuid) {
+    public updateServiceImp(String ccp, String name, String channelName, String chaincodeName, String uuid) throws Exception {
         proxy = new updateApp(ccp, name, channelName, chaincodeName);
         this.uuid = uuid;
     }
@@ -38,7 +38,10 @@ public class updateServiceImp implements updateService.Iface{
             throw new TException("Invalid token found: " + token);
         }
         try {
+            //long start = System.currentTimeMillis();
             proxy.initDataRecord(new String[]{uuid, department, userName, object, type, operateTime, content});
+            //long end = System.currentTimeMillis();
+            //System.out.println("Time costs:" + (end - start));
         } catch (Exception e) {
             throw new TException(e);
         }

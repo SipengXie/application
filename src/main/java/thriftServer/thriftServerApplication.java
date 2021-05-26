@@ -1,11 +1,10 @@
 package thriftServer;
 
-import application.javaRpcToken.javaRpcToken;
+import thriftServer.javaRpcToken.javaRpcToken;
 import thriftServer.server.ThriftServer;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

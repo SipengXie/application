@@ -70,7 +70,6 @@ public class IdentityManagement {
         if (wallet.get("admin") != null) {
             throw new Exception("An identity for the admin user \"admin\" already exists in the wallet");
         }
-        // TODO：we can use the org's own TLS cert, thus may need more parameters.
         final EnrollmentRequest enrollmentRequestTLS = new EnrollmentRequest();
         enrollmentRequestTLS.addHost("localhost");
         enrollmentRequestTLS.setProfile("tls");
