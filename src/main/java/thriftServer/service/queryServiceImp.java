@@ -1,18 +1,18 @@
 package thriftServer.service;
 
-import application.fabricProxy.queryApp;
-import thriftServer.fabricRpcService.queryService;
+import application.fabricProxy.QueryApp;
+import thriftServer.fabricRpcService.QueryService;
 import thriftServer.javaRpcToken.javaRpcToken;
 import org.apache.thrift.TException;
 
 import java.util.Map;
 
-public class queryServiceImp implements queryService.Iface {
+public class queryServiceImp implements QueryService.Iface {
 
-    private final queryApp proxy;
+    private final QueryApp proxy;
     private final String uuid;
     public queryServiceImp(String ccp, String name, String channelName, String chaincodeName, String uuid) throws Exception{
-        proxy = new queryApp(ccp, name, channelName, chaincodeName);
+        proxy = new QueryApp(ccp, name, channelName, chaincodeName);
         this.uuid = uuid;
     }
 
@@ -22,60 +22,12 @@ public class queryServiceImp implements queryService.Iface {
     }
 
     @Override
-    public String queryDataRecordById(String uuid, String token) throws TException {
+    public String queryById(String id, String token) throws TException {
         if(checkToken(token)) {
             throw new TException("Invalid token found: " + token);
         }
         try {
-            return proxy.queryDataRecordById(new String[]{uuid});
-        } catch (Exception e) {
-            throw new TException(e);
-        }
-    }
-
-    @Override
-    public String queryDataRecordByObject(String object, String token) throws TException {
-        if(checkToken(token)) {
-            throw new TException("Invalid token found: " + token);
-        }
-        try {
-            return proxy.queryDataRecordByObject(new String[]{object});
-        } catch (Exception e) {
-            throw new TException(e);
-        }
-    }
-
-    @Override
-    public String queryDataRecordByUser(String department, String user, String token) throws TException {
-        if(checkToken(token)) {
-            throw new TException("Invalid token found: " + token);
-        }
-        try {
-            return proxy.queryDataRecordByUser(new String[]{department, user});
-        } catch (Exception e) {
-            throw new TException(e);
-        }
-    }
-
-    @Override
-    public String queryUserRecordByDept(String department, String token) throws TException {
-        if(checkToken(token)) {
-            throw new TException("Invalid token found: " + token);
-        }
-        try {
-            return proxy.queryUserRecordByDept(new String[]{department});
-        } catch (Exception e) {
-            throw new TException(e);
-        }
-    }
-
-    @Override
-    public String queryUserRecordByAddr(String address, String token) throws TException {
-        if(checkToken(token)) {
-            throw new TException("Invalid token found: " + token);
-        }
-        try {
-            return proxy.queryUserRecordByAddr(new String[]{address});
+            return proxy.evaluateTransaction("queryRecordById", new String[]{id});
         } catch (Exception e) {
             throw new TException(e);
         }
@@ -87,7 +39,67 @@ public class queryServiceImp implements queryService.Iface {
             throw new TException("Invalid token found: " + token);
         }
         try {
-            return proxy.queryWithQueryString(new String[]{queryString});
+            return proxy.evaluateTransaction("queryWithQueryString", new String[]{queryString});
+        } catch (Exception e) {
+            throw new TException(e);
+        }
+    }
+
+    @Override
+    public String queryOpinion(String objectId, String token) throws TException {
+        if(checkToken(token)) {
+            throw new TException("Invalid token found: " + token);
+        }
+        try {
+            return proxy.evaluateTransaction("queryRecordByObject", new String[]{"opinionRecord",objectId});
+        } catch (Exception e) {
+            throw new TException(e);
+        }
+    }
+
+    @Override
+    public String queryReview(String opinionId, String token) throws TException {
+        if(checkToken(token)) {
+            throw new TException("Invalid token found: " + token);
+        }
+        try {
+            return proxy.evaluateTransaction("queryRecordByObject", new String[]{"reviewRecord",opinionId});
+        } catch (Exception e) {
+            throw new TException(e);
+        }
+    }
+
+    @Override
+    public String queryOpinion_ByUser(String department, String name, String token) throws TException {
+        if(checkToken(token)) {
+            throw new TException("Invalid token found: " + token);
+        }
+        try {
+            return proxy.evaluateTransaction("queryRecordByUser", new String[]{"opinionRecord",department, name});
+        } catch (Exception e) {
+            throw new TException(e);
+        }
+    }
+
+    @Override
+    public String queryReview_ByUser(String department, String name, String token) throws TException {
+        if(checkToken(token)) {
+            throw new TException("Invalid token found: " + token);
+        }
+        try {
+            return proxy.evaluateTransaction("queryRecordByUser", new String[]{"reviewRecord",department, name});
+        } catch (Exception e) {
+            throw new TException(e);
+        }
+    }
+
+    @Override
+    public String queryUserRecord(String department, String name, String token) throws TException {
+        if(checkToken(token)) {
+            throw new TException("Invalid token found: " + token);
+        }
+        try {
+            return proxy.evaluateTransaction("queryRecordByUser", new String[]{"userRecord",department, name});
         } catch (Exception e) {
             throw new TException(e);
         }

@@ -14,14 +14,14 @@ public class App {
     }
 
     private Path networkConfigPath = null;
-    private String userName = null;
+    private String name = null;
     private String channelName = null;
     private String chaincodeName = null;
     private Gateway gateway = null;
 
     public App(String ccp, String name, String channelName, String chaincodeName) {
         networkConfigPath = Paths.get(ccp);
-        userName = name;
+        this.name = name;
         this.channelName = channelName;
         this.chaincodeName = chaincodeName;
     }
@@ -31,7 +31,7 @@ public class App {
         Path walletPath = Paths.get("wallet");
         Wallet wallet = Wallets.newFileSystemWallet(walletPath);
         Gateway.Builder builder = Gateway.createBuilder();
-        builder.identity(wallet, userName).networkConfig(networkConfigPath).discovery(true);
+        builder.identity(wallet, name).networkConfig(networkConfigPath).discovery(true);
         gateway =  builder.connect();
         Network network = gateway.getNetwork(channelName);
         return network.getContract(chaincodeName);
