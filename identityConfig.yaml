@@ -1,0 +1,6 @@
+caPemFilePath : D:\hyperledgerFabric\fabric-samples\test-network\organizations\peerOrganizations\org1.example.com\ca\ca.org1.example.com-cert.pem # 获得Ca证书后自行填写
+caAddress : https://localhost:7054 # 和docker文件一致
+adminPassword : adminpw # 和fabric-ca-sever-config.yaml文件一致
+mspId : Org1MSP # 和configtx.yaml文件一致
+userName : RpcServer # 自定义
+department : org1.department1 # 和fabric-ca-sever-config.yaml文件一致

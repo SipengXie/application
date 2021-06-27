@@ -7,26 +7,29 @@ import org.hyperledger.fabric.gateway.Gateway;
 import org.hyperledger.fabric.gateway.Network;
 import org.hyperledger.fabric.gateway.Wallet;
 import org.hyperledger.fabric.gateway.Wallets;
-
+/*
+ 服务代理的总体父类，集成了连接Fabric网关和获取合约的操作
+ */
 public class App {
+    // 本地服务类，是测试网络采用的属性
     static {
         System.setProperty("org.hyperledger.fabric.sdk.service_discovery.as_localhost", "true");
     }
-
     private Path networkConfigPath = null;
     private String name = null;
     private String channelName = null;
     private String chaincodeName = null;
     private Gateway gateway = null;
 
-    public App(String ccp, String name, String channelName, String chaincodeName) {
-        networkConfigPath = Paths.get(ccp);
+    public App(String ncp, String name, String channelName, String chaincodeName) {
+        networkConfigPath = Paths.get(ncp);
         this.name = name;
         this.channelName = channelName;
         this.chaincodeName = chaincodeName;
     }
-
-    // Errors during connecting to gateway should be processed by upper layer
+/*
+ 连接至网关并获取合约
+ */
     public Contract connectAndGetContract() throws Exception {
         Path walletPath = Paths.get("wallet");
         Wallet wallet = Wallets.newFileSystemWallet(walletPath);
@@ -40,6 +43,5 @@ public class App {
     public void closeGateway() {
         gateway.close();
     }
-
 
 }

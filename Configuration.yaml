@@ -1,0 +1,5 @@
+ncp : D:\hyperledgerFabric\fabric-samples\test-network\organizations\peerOrganizations\org1.example.com\connection-org1.yaml
+channelName : mychannel
+chaincodeName : record
+userName : RpcServer
+tokenPath : D:\RpcToken

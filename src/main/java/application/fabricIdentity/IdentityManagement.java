@@ -15,45 +15,33 @@ import org.hyperledger.fabric_ca.sdk.EnrollmentRequest;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
 import org.hyperledger.fabric_ca.sdk.RegistrationRequest;
 
-
+/*
+ 该类为身份分发的实际服务类，提供与身份有关的所有服务，构造函数将用于读取配置文件信息
+ */
 public class IdentityManagement {
-    static {
-        System.setProperty("org.hyperledger.fabric.sdk.service_discovery.as_localhost", "true");
+    public IdentityManagement(String caPemFile, String caAddress, String adminPwd,
+                              String mspId, String userName, String department) {
+        this.caPemFile = caPemFile;
+        this.caAddress = caAddress;
+        this.adminPwd = adminPwd;
+        this.mspId = mspId;
+        this.userName = userName;
+        this.department = department;
     }
+
     private String caPemFile = null;
     private String caAddress = null;
     private String adminPwd = null;
     private String mspId = null;
     private String userName = null;
     private String department = null;
+
     private Wallet wallet = null;
     private HFCAClient caClient = null;
-
-    public void setCaPemFile(String pemFile) {
-        caPemFile = pemFile;
-    }
-
-    public void setCaAddress(String address) {
-        caAddress = address;
-    }
-
-    public void setAdminPwd(String password) {
-        adminPwd = password;
-    }
-
-    public void setMspId(String Id) {
-        mspId = Id;
-    }
-
-    public void setUserName(String name) {
-        userName = name;
-    }
-
-    public void setDepartment(String dept) {
-        department = dept;
-    }
-
-    public void setWallet() throws Exception{
+/*
+ 创建钱包文件夹，钱包文件夹将用于创造身份，同时也创造了和Fabric CA server相沟通的caClient
+ */
+    public void createWallet() throws Exception{
         Properties props = new Properties();
         props.put("pemFile", caPemFile);
         props.put("allowAllHostNames", "true");
@@ -62,7 +50,10 @@ public class IdentityManagement {
         caClient.setCryptoSuite(cryptoSuite);
         wallet = Wallets.newFileSystemWallet(Paths.get("wallet"));
     }
-
+/*
+ 将管理员身份分发注册进去，管理员身份已经在CA中配置完毕，此处通过传入密码的方式将管理员身份置入钱包中
+ 钱包中的管理员身份将用于分发后续终端用户的身份
+ */
     public void enrollAdmin() throws Exception {
         if (caPemFile == null || caAddress == null || adminPwd == null || mspId == null)
             throw new Exception("Configuration incomplete");
@@ -79,7 +70,9 @@ public class IdentityManagement {
         wallet.put("admin", admin);
         System.out.println("Successfully enrolled user \"admin\" and imported it into the wallet");
     }
-
+/*
+ 分发终端用户的身份，需要用到管理员身份
+ */
     public void registerUser() throws Exception {
         if (caPemFile == null || caAddress == null || userName == null || department == null)
             throw new Exception("Configuration incomplete");
